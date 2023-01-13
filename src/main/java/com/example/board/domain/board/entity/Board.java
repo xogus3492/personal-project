@@ -1,8 +1,9 @@
-package com.example.board.board.entity;
+package com.example.board.domain.board.entity;
 
 
-import com.example.board.comment.entity.Comment;
-import com.example.board.user.entity.User;
+import com.example.board.domain.BaseTimeEntity;
+import com.example.board.domain.comment.entity.Comment;
+import com.example.board.domain.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "board_table")
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "board_id", length = 45)
@@ -31,14 +32,6 @@ public class Board {
 
     @Column(name = "view_count")
     private Long viewCount;
-
-    @CreatedDate
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    @Column(name = "modify_date")
-    private LocalDateTime modifyDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
