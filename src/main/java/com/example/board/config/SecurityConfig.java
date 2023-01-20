@@ -2,24 +2,39 @@ package com.example.board.config;
 
 import com.example.board.exception.ErrorCode;
 import com.example.board.exception.ErrorResponse;
+import com.example.board.jwt.JwtSecurityConfig;
+import com.example.board.jwt.JwtTokenProvider;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    private final JwtTokenProvider jwtTokenProvider;
     private final String[] AUTH_WHITELIST = {
 
     }; // 권한이 필요 없는 경로들
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,9 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // exception 등록
 
                 .and()
-                .addFilterBefore()
-                .addFilterBefore()
-                // filter 등록
+                .apply(new JwtSecurityConfig(jwtTokenProvider));
+                // jwt관련 custom 설정 클래스 적용
+
     }
 
     private AccessDeniedHandler accessDeniedHandler() {

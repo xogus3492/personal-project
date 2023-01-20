@@ -9,7 +9,7 @@ spring:
     username: root
     password: 4320
 
-# createDatabaseIfNotExist=true   => db? ???? ?? ? ???? ??
+# createDatabaseIfNotExist=true   => db에 데이터베이스가 존재하지 않으면 생성 해 줌
 
   jpa:
     database: mysql
@@ -20,3 +20,11 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
