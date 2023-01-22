@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,14 +26,25 @@ public class User extends BaseTimeEntity {
     @Column(name = "email", length = 45)
     private String email;
 
-    @Column(name = "password", length = 45)
+    @Column(name = "password", length = 200)
     private String password;
+
     @Column(name = "name", length = 45)
     private String name;
+
+    @Column(name = "activated")
+    private boolean activated;
 
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Comment> commentList = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 }

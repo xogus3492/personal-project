@@ -41,7 +41,7 @@ public class JwtFilter extends GenericFilterBean {
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
-    }
+    } // 결론적으로 SecurityContext에 유저의 인증 정보를 저장하는 과정
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
