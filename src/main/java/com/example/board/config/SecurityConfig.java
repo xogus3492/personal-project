@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // cors, csrf 설정
 
                 .authorizeRequests()
-                .antMatchers("/auth/signup", "auth/signin").permitAll() // 권한 x
+                .antMatchers("/auth/signup", "/auth/signin").permitAll() // 권한 x
                 //.antMatchers().authenticated() // 권한 o
                 .anyRequest().authenticated() // 나머지 것들 권한 필요
                 // 요청 경로 권한 설정
