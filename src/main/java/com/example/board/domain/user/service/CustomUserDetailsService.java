@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findOneWithAuthoritiesByEmail(email)
                 .map(user -> createUser(email, user))
                 .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
-    } // db에서 유저정보와 권한정보를 가져옴
+    } // db에서 유저정보와 권한정보를 가져와 UserDetails로 전달
 
     private org.springframework.security.core.userdetails.User createUser(String email, User user) {
         if (!user.isActivated()) {

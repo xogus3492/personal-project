@@ -6,6 +6,8 @@ import com.example.board.jwt.JwtFilter;
 import com.example.board.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.juli.logging.Log;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -37,7 +39,11 @@ public class AuthController {
         // athenticate() 메소드가 실행 될 때, CustomUserDetailsService의 loadUserByUsername()가 실행 됨
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        //System.out.println("확인!");
+
         String jwt = jwtTokenProvider.createToken(authentication);
+
+        //System.out.println("확인!");
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);

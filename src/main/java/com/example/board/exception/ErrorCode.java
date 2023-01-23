@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     ACCESS_DENIED(403, "NO_ATHORIZED", "권한이 없습니다."),
-    UNAUTHORIZED(401, "UNAUTHORIZED", "인증되지 않은 사용자입니다."),
+    UNAUTHORIZED(401, "UNAUTHORIZED", "unauthorized"),
     ;
 
     private final int status;

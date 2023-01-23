@@ -1,10 +1,13 @@
 package com.example.board.config;
 
+import com.example.board.domain.user.service.UserService;
 import com.example.board.exception.ErrorCode;
 import com.example.board.exception.ErrorResponse;
 import com.example.board.jwt.JwtSecurityConfig;
 import com.example.board.jwt.JwtTokenProvider;
 
+import com.example.board.jwt.exception.JwtAccessDeniedHandler;
+import com.example.board.jwt.exception.JwtAuthenticationEntryPoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +30,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
-    private final String[] AUTH_WHITELIST = {
 
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final String[] AUTH_WHITELIST = {
+            "/auth/signup",
+            "/auth/signin"
     }; // 권한이 필요 없는 경로들
 
     @Bean
@@ -53,9 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // cors, csrf 설정
 
                 .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll() // 권한 x
-                .antMatchers("/aoccount/signup", "/account/signin").authenticated() // 권한 o
-                //.anyRequest().authenticated() -> 나머지 것들 권한 필요
+                .antMatchers("/auth/signup", "auth/signin").permitAll() // 권한 x
+                //.antMatchers().authenticated() // 권한 o
+                .anyRequest().authenticated() // 나머지 것들 권한 필요
                 // 요청 경로 권한 설정
 
                 .and()
