@@ -3,9 +3,7 @@ package com.example.board.domain.user.entity;
 import com.example.board.domain.BaseTimeEntity;
 import com.example.board.domain.board.entity.Board;
 import com.example.board.domain.comment.entity.Comment;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -18,6 +16,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user_table")
 public class User extends BaseTimeEntity {
 

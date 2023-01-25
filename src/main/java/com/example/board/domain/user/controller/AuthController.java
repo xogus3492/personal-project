@@ -39,11 +39,7 @@ public class AuthController {
         // athenticate() 메소드가 실행 될 때, CustomUserDetailsService의 loadUserByUsername()가 실행 됨
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        //System.out.println("확인!");
-
         String jwt = jwtTokenProvider.createToken(authentication);
-
-        //System.out.println("확인!");
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
